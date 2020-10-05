@@ -81,33 +81,21 @@ void loop()
 
 
 void packet_is_OK()
-{
-  uint16_t IRQStatus, localCRC;
 
-  IRQStatus = LT.readIrqStatus();                  //read the LoRa device IRQ status register
+        if (client.connect(clientId.c_str()))
+        {
+            Serial.println("connected");
 
-  RXpacketCount++;
+            client.subscribe("YOUR-TOPIC");//*****************************************************CHANGE ME...4.......THIS IS YOUR MQTT TOPIC
+        }
+        else
+        {
+            Serial.print("failed, rc=");
+            Serial.print(client.state());
+            Serial.println(" try again in 5 seconds");
 
-  printElapsedTime();                              //print elapsed time to Serial Monitor
-  Serial.print(F("  "));
-  LT.printASCIIPacket(RXBUFFER, RXPacketL);        //print the packet as ASCII characters
-
-  localCRC = LT.CRCCCITT(RXBUFFER, RXPacketL, 0xFFFF);  //calculate the CRC, this is the external CRC calculation of the RXBUFFER
-  Serial.print(F(",CRC,"));                        //contents, not the LoRa device internal CRC
-  Serial.print(localCRC, HEX);
-  Serial.print(F(",RSSI,"));
-  Serial.print(PacketRSSI);
-  Serial.print(F("dBm,SNR,"));
-  Serial.print(PacketSNR);
-  Serial.print(F("dB,Length,"));
-  Serial.print(RXPacketL);
-  Serial.print(F(",Packets,"));
-  Serial.print(RXpacketCount);
-  Serial.print(F(",Errors,"));
-  Serial.print(errors);
-  Serial.print(F(",IRQreg,"));
-  Serial.print(IRQStatus, HEX);
-}
+            delay(6000);
+        }
 
 
 void packet_is_Error()
