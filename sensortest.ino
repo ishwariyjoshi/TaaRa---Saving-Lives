@@ -10,12 +10,13 @@ Adafruit_ADXL343 accel = Adafruit_ADXL343(12345);
 /* Uncomment following line for Wire1 bus */
 //Adafruit_ADXL343 accel = Adafruit_ADXL343(12345, &Wire1);
 
-void displaySensorDetails(void)
+void displaySensorDetails(void) /* Declaring and defining displaySensorDetails function*/
 {
   sensor_t sensor;
   accel.getSensor(&sensor);
+  Serial.println("Displaying sensor details");
   Serial.println("------------------------------------");
-  Serial.print  ("Sensor:       "); Serial.println(sensor.name);
+  Serial.print  ("Sensor:       "); Serial.println(sensor.name); /* Printing on Serial Monitor*/
   Serial.print  ("Driver Ver:   "); Serial.println(sensor.version);
   Serial.print  ("Unique ID:    "); Serial.println(sensor.sensor_id);
   Serial.print  ("Max Value:    "); Serial.print(sensor.max_value); Serial.println(" m/s^2");
@@ -28,7 +29,7 @@ void displaySensorDetails(void)
 
 void displayDataRate(void)
 {
-  Serial.print  ("Data Rate:    ");
+  Serial.print  ("Data Rate is:    ");
 
   switch(accel.getDataRate())
   {
@@ -148,6 +149,7 @@ void loop(void)
   /* Display the results (acceleration is measured in m/s^2) */
   Serial.print("X: "); Serial.print(event.acceleration.x); Serial.print("  ");
   Serial.print("Y: "); Serial.print(event.acceleration.y); Serial.print("  ");
-  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");Serial.println("m/s^2 ");
+  Serial.print("Z: "); Serial.print(event.acceleration.z); Serial.print("  ");
+  Serial.println("m/s^2 ");
   delay(500);
 }
